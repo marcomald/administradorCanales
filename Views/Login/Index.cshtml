@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Login Page";
+}
+
+@model AdministradorCanales.Entities.Usuario
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Login</h1>
+            @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+            {
+                <form>
+                    <div class="form-group">
+                        <label for="correo">Correo Electronico</label>
+                        @Html.TextBoxFor(u => u.Correo, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="contrasena">Contraseña</label>
+                        @Html.PasswordFor(u => u.Contrasena, new { @class = "form-control" })
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                </form>
+                <p>
+                    @ViewBag.error
+                </p>
+            }
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+</body>
+</html>
+
