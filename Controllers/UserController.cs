@@ -25,8 +25,10 @@ namespace AdministradorCanales.Controllers
 
         public ActionResult Chat()
         {
+            ViewBag.userId = Session["usuario_id"].ToString();
             ViewBag.CreateChat = true;
             ViewBag.Mensajes = new Mensaje[0];
+            
             return View("Chat");
         }
 
@@ -34,7 +36,7 @@ namespace AdministradorCanales.Controllers
         public ActionResult Chat(string asunto)
         {
             ViewBag.CreateChat = false;
-
+            ViewBag.userId = Session["usuario_id"].ToString();
             Chat chat = new Chat();
             chat.Asunto = asunto;
             chat.Canal = "mensajeria";
@@ -48,7 +50,9 @@ namespace AdministradorCanales.Controllers
         [HttpPost]
         public ActionResult SendMessage(string texto)
         {
-            if(texto.Length > 0)
+            ViewBag.userId = Session["usuario_id"].ToString();
+            List<Mensaje> mensajes = new List<Mensaje>();
+            if (texto.Length > 0)
             {
                 ViewBag.CreateChat = false;
 
@@ -57,10 +61,27 @@ namespace AdministradorCanales.Controllers
                 mensaje.IdUsuario = Session["usuario_id"].ToString();
                 mensaje.Texto = texto;
                 mensaje.Fecha = DateTime.Now;
-                ViewBag.Mensajes = mensajeModel.ingresar(mensaje);
+                
+                mensajes= mensajeModel.ingresar(mensaje);
+                ViewBag.Mensajes = mensajes;
             }
             
-            return View("Chat");
+            return View("Chat", mensajes);
+        }
+
+        public ActionResult SendMessage()
+        {
+            
+            ViewBag.userId = Session["usuario_id"].ToString();
+            List<Mensaje> mensajes = new List<Mensaje>();
+            if (Session["chat_id"] != null)
+            {
+                string id = Session["chat_id"].ToString();
+                ViewBag.Mensajes = mensajeModel.mensajesPorChat(id);
+                mensajes = mensajeModel.mensajesPorChat(id);
+            }
+
+            return View("Chat", mensajes);
         }
     }
 }
