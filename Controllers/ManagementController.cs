@@ -19,6 +19,7 @@ namespace AdministradorCanales.Controllers
         private UsuarioModel usuarioModel = new UsuarioModel();
         public ActionResult Index()
         {
+            ViewBag.Logged = Session["usuario_id"];
             return View();
         }
 
@@ -41,11 +42,11 @@ namespace AdministradorCanales.Controllers
         {
             RestClient client = new RestClient();
             client.BaseUrl = new Uri("https://api.mailgun.net/v3");
-            client.Authenticator = new HttpBasicAuthenticator("api", "f7611bbfa0a597219bfe5f33a8a7f6dc-16ffd509-783f7c82");
+            client.Authenticator = new HttpBasicAuthenticator("api", "7dada59033608b2131b4e0d39f6947b8-afab6073-99095e76");
             RestRequest request = new RestRequest();
-            request.AddParameter("domain", "sandbox8287bcebf99047a7acedf54618d1c36d.mailgun.org", ParameterType.UrlSegment);
+            request.AddParameter("domain", "sandboxbcda704e206f4ac29f6e640492eff81b.mailgun.org", ParameterType.UrlSegment);
             request.Resource = "{domain}/messages";
-            request.AddParameter("from", "Usuario Tesis <mailgun@sandbox8287bcebf99047a7acedf54618d1c36d.mailgun.org>");
+            request.AddParameter("from", "Usuario Tesis <mailgun@sandboxbcda704e206f4ac29f6e640492eff81b.mailgun.org>");
             request.AddParameter("to", destinatario);
             request.AddParameter("subject", asunto);
             request.AddParameter("text", texto);

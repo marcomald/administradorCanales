@@ -31,14 +31,8 @@ namespace AdministradorCanales.Controllers
                     Session["usuario_nombre"] = usuario.Nombre;
                     Session["usuario_apellido"] = usuario.Apellido;
                     Session["usuario_rol"] = usuario.Rol;
-                    if (usuario.Rol == true)
-                    {
-                        return RedirectToAction("Index", "Management");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "User");
-                    }
+                   
+                    return RedirectToAction("Index", "Management");
                 }
             }
             ViewBag.error = "Correo y/o contraseña incorrecta";
